@@ -25,7 +25,7 @@ Main proc
    int 21h
    ;;;;;;;;;;;;;;;;
    
-   MOV BL, 0
+   MOV BX, 0
    MOV CX, 100
    Typing:
         
@@ -62,7 +62,7 @@ Main proc
         CMP AL, 'u'
         JE vocal
         
-        CMP AL, 09
+        CMP AL, 13
         JE final
         
         comp_end:
@@ -70,7 +70,7 @@ Main proc
         RET
         
    vocal:
-       INC BL
+       INC BX
        JMP comp_end
    
    final:
@@ -85,10 +85,23 @@ Main proc
        int 21h
        ;;;;;;;;;;;;;;;;
        
-       MOV DL, BL
+       
+       MOV AX, BX
+       MOV CL, 10
+       
+       DIV CL   
+       
+       MOV BH, AH
+       
+       MOV DL, AL
        ADD DL, 30h
        MOV AH, 2
        int 21h
+       
+       MOV DL, BH
+       ADD DL, 30h
+       MOV AH, 2
+       int 21h  
        
        MOV AH, 4Ch
        int 21h 
